@@ -1,5 +1,5 @@
 # Use a golang base image
-FROM golang:1.19.8
+FROM golang:1.22.2-alpine3.19
 # Set current working directory inside the container
 WORKDIR /app
 # Copy go mod and sum files
