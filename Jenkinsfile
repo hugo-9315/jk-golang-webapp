@@ -34,7 +34,6 @@ pipeline {
       agent any
       steps {
         script {
-          /* sh '''curl http://localhost:${PORT_EXPOSED} | grep -q "vuejs-webapp-sample"''' */
           sh '''
             echo "Running tests within the Docker container"
             docker exec $IMAGE_NAME go test ./... -v
