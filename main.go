@@ -2,9 +2,8 @@ package main
 
 import (
 	"embed"
-
+	"os"
 	"github.com/labstack/echo/v4"
-
 	"github.com/ybkuroki/go-webapp-sample/config"
 	"github.com/ybkuroki/go-webapp-sample/container"
 	"github.com/ybkuroki/go-webapp-sample/logger"
@@ -58,7 +57,7 @@ func main() {
 	middleware.InitSessionMiddleware(e, container)
 	middleware.StaticContentsMiddleware(e, container, staticFile)
 
-	if err := e.Start(":8080"); err != nil {
+	if err := e.Start(":" + os.Getenv("PORT")); err != nil {
 		logger.GetZapLogger().Errorf(err.Error())
 	}
 
