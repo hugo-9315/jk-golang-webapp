@@ -4,7 +4,7 @@
 pipeline {
   environment {
     ID_DOCKER = "${ID_DOCKER_PARAMS}"
-    IMAGE_NAME = "website-karma"
+    IMAGE_NAME = "jk-golang-webapp-books"
     IMAGE_TAG = "latest"
   }
   agent none
