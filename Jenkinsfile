@@ -24,7 +24,7 @@ pipeline {
           sh '''
             echo "Clean Environment"
             docker rm -f $IMAGE_NAME || echo "container does not exist"
-            docker run --name $IMAGE_NAME -d -p ${PORT_EXPOSED}:80 -e PORT=80 ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG
+            docker run --name $IMAGE_NAME -d -p ${PORT_EXPOSED}:8081 -e PORT=8081 ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG
             sleep 5
           '''
         }
@@ -34,7 +34,11 @@ pipeline {
       agent any
       steps {
         script {
-          sh '''curl http://localhost:${PORT_EXPOSED} | grep -q "vuejs-webapp-sample"'''
+          /* sh '''curl http://localhost:${PORT_EXPOSED} | grep -q "vuejs-webapp-sample"''' */
+          sh '''
+            echo "Running tests within the Docker container"
+            docker exec $IMAGE_NAME go test ./... -v
+          '''
         }
       }
     }
