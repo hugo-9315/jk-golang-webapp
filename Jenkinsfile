@@ -34,7 +34,7 @@ pipeline {
       agent any
       steps {
         script {
-          sh '''curl http://localhost:${PORT_EXPOSED} | grep -q "Deals of the Week"'''
+          sh '''curl http://localhost:${PORT_EXPOSED} | grep -q "vuejs-webapp-sample"'''
         }
       }
     }
