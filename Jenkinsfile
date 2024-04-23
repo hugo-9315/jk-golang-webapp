@@ -62,8 +62,39 @@ pipeline {
                 }
             }
         }
+
+    stage('Push image in staging and deploy it') {
+      when {
+        expression { GIT_BRANCH == 'origin/main' }
+      }
+      agent any
+      environment {
+        RENDER_STAGING_DEPLOY_HOOK = credentials('render_golang_key')
+      }  
+      steps {
+        script {
+          bat '''
+            echo "Staging"
+            echo %RENDER_STAGING_DEPLOY_HOOK%
+            curl %RENDER_STAGING_DEPLOY_HOOK%
+            '''
+          }
+      }
+    }
   
   }
 
+  post {
+        success {
+            mail to: 'djibril.6et@gmail.com',
+                 subject: "Succès du Pipeline ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+                 body: "Le pipeline a réussi. L'application a été déployée sur Render."
+        }
+        failure {
+            mail to: 'djibril.6et@gmail.com',
+                 subject: "Échec du Pipeline ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+                 body: "Le pipeline a échoué. Veuillez vérifier Jenkins pour plus de détails."
+        }
+    }
 
 }
