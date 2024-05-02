@@ -9,6 +9,13 @@ pipeline {
     PORT_EXPOSED = "${PORT_EXPOSED}"
   }
 
+  agent any
+
+    triggers {
+        // Vérifie le dépôt pour des changements toutes les 5 minutes
+        pollSCM('H/5 * * * *')
+    }
+
   stages {
     stage('Build image') {
       agent any
