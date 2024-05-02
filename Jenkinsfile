@@ -1,5 +1,4 @@
 pipeline {
-  agent any
   
   environment {
     ID_DOCKER = "${ID_DOCKER_PARAMS}"
